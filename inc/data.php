@@ -1,11 +1,13 @@
 <?php
+include("connection.php");
 
+/*
 
 $catalog = [];
 //Books
 $catalog[101] = [
-	"title" => "A Design Patterns: Elements of Reusable Object-Oriented Software",
-	"img" => "img/media/design_patterns.jpg",
+    "title" => "A Design Patterns: Elements of Reusable Object-Oriented Software",
+    "img" => "img/media/design_patterns.jpg",
     "genre" => "Tech",
     "format" => "Paperback",
     "year" => 1994,
@@ -186,3 +188,4 @@ $catalog[304] = [
     "category" => "Music",
     "artist" => "Nat King Cole"
 ];
+*/
