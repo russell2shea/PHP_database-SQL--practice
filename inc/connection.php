@@ -12,18 +12,4 @@ catch (Exception $e){
 	exit;
 }
 
-// Try to query the database and make the result into a POD statment object
-try {
-	$results = $db->query("SELECT title, category, img FROM Media");
-} 
 
-// If can't query the database return an error message
-catch (Exception $e) {
-	echo "Unable to retrieve results";
-}
-
-
-$catalog = $results->fetchAll();
-
-
-//if you have a specific instance of a class you use the single arrow and if you call a method on a property its self you use the double colon
