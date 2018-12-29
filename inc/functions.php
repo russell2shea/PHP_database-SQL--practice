@@ -5,7 +5,20 @@ function full_catalog_array(){
 
     // Try to query the database and make the result into a POD statment object
     try {
-        $results = $db->query("SELECT media_id, title, category, img FROM Media");
+        $results = $db->query("
+            SELECT media_id, title, category, img 
+            FROM Media
+            ORDER BY 
+            REPLACE(
+                REPLACE(
+                  REPLACE(title, 'The ', ''),
+                  'An ',
+                  ''
+                ),
+                'A ',
+                ''
+            )"
+        );
     } 
 
     // If can't query the database return an error message
@@ -88,6 +101,43 @@ function random_catalog_array(){
     $catalog = $results->fetchAll();
     return $catalog;
 }
+
+function category_catalog_array($category){
+    include("connection.php");
+    // strtolower and LOWER in the below sql query will make sure we don't run into case issues
+    $category = strtolower($category);
+
+    // Try to query the database and make the result into a POD statment object
+    try {
+        $results = $db->prepare(
+            "SELECT media_id, title, category, img 
+            FROM Media
+            WHERE LOWER(category) = ?
+            ORDER BY 
+            REPLACE(
+                REPLACE(
+                  REPLACE(title, 'The ', ''),
+                  'An ',
+                  ''
+                ),
+                'A ',
+                ''
+            )"
+        );
+        $results->bindParam(1,$category,PDO::PARAM_STR);
+        $results->execute();
+    } 
+
+    // If can't query the database return an error message
+    catch (Exception $e) {
+        echo "Unable to retrieve results";
+    }
+
+
+    $catalog = $results->fetchAll();
+    return $catalog;
+}
+
 
 function get_item_html($item) {
     $output = "<li><a href='details.php?id="
