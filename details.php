@@ -1,12 +1,11 @@
 <?php 
 include("inc/functions.php");
-$catalog = full_catalog_array();
 
 if (isset($_GET["id"])) {
-    $id = $_GET["id"];
-    if (isset($catalog[$id])) {
-        $item = $catalog[$id];
-    }
+    //Remove harmful material from the input
+    $id = filter_input(INPUT_GET, "id",FILTER_SANITIZE_NUMBER_INT);
+    single_item_array($id);
+    $item = single_item_array($id);
 }
 
 if (!isset($item)) {
