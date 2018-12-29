@@ -8,7 +8,7 @@ if (isset($_GET["id"])) {
     $item = single_item_array($id);
 }
 
-if (!isset($item)) {
+if (empty($item)) {
     header("location:catalog.php");
     exit;
 }
@@ -42,52 +42,52 @@ include("inc/header.php"); ?>
             <h1><?php echo $item["title"]; ?></h1>
             <table>
             
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Category</th>
                     <td><?php echo $item["category"]; ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Genre</th>
                     <td><?php echo $item["genre"]; ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Format</th>
                     <td><?php echo $item["format"]; ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Year</th>
                     <td><?php echo $item["year"]; ?></td>
                 </tr>
                 <?php if (strtolower($item["category"]) == "books") { ?>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Authors</th>
-                    <td><?php echo implode(", ",$item["authors"]); ?></td>
+                    <td><?php echo implode(", ",$item["author"]); ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Publisher</th>
                     <td><?php echo $item["publisher"]; ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>ISBN</th>
                     <td><?php echo $item["isbn"]; ?></td>
                 </tr>    
                 <?php } else if (strtolower($item["category"]) == "movies") { ?>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Director</th>
-                    <td><?php echo $item["director"]; ?></td>
+                    <td><?php echo implode(", ",$item["director"]); ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Writers</th>
-                    <td><?php echo implode(", ",$item["writers"]); ?></td>
+                    <td><?php echo implode(", ",$item["writer"]); ?></td>
                 </tr>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Stars</th>
-                    <td><?php echo implode(", ",$item["stars"]); ?></td>
+                    <td><?php echo implode(", ",$item["star"]); ?></td>
                 </tr>
                 <?php } else if (strtolower($item["category"]) == "music") { ?>
-                <tr>
+                <tr style="border-bottom: solid 2px #ccc;">
                     <th>Artist</th>
-                    <td><?php echo $item["artist"]; ?></td>
+                    <td><?php echo implode(", ",$item["artist"]); ?></td>
                 </tr>
                 <?php } ?>
             </table>

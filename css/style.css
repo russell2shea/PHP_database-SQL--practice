@@ -619,6 +619,7 @@ body {font-family: 'Open Sans', sans-serif; background:#f0eeed; color: #676767;}
 .media-details form {
     margin-left: 0;
 }
+
 form {width: 475px; margin: 34px auto;}
 form tr {text-align:left;}
 form table {width: 475px; margin-bottom: 16px;}
@@ -697,3 +698,4 @@ form input[type="submit"] {
 .footer a {text-decoration: none; color: #539def; margin: 0 10px;}
 .footer li:first-child a {margin-left: 4px;}
 .footer a:hover, .footer a:active {text-decoration: underline;}
+

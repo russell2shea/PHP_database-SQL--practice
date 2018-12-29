@@ -23,21 +23,47 @@ function single_item_array($id){
     include("connection.php");
 
     try {
-        $results = $db->query(
+        $results = $db->prepare(
             "SELECT title, category, img, format, year, genre, publisher, isbn
             FROM Media
             JOIN Genres ON Media.genre_id = Genres.genre_id
             LEFT OUTER JOIN Books ON Media.media_id = Books.media_id
-            WHERE Media.media_id = $id"
+            WHERE Media.media_id = ?"
         );
+        //Use Prepare and ? to protect against SQL injections. Binds the id varable to the ? palceholder
+        $results->bindParam(1,$id,PDO::PARAM_INT);
+        //executes the query and loads the results into the results objects
+        $results->execute();
     } 
 
     catch (Exception $e) {
         echo "Unable to retrieve results";
     }
 
-    $catalog = $results->fetch();
-    return $catalog;
+    //Calls the fetch method to retrieve item info for the 1 product that matches the id. loads the item variable. Will contain false if no item found
+    $item = $results->fetch();
+    if (empty($item)) return $item;
+        try {
+            $results = $db->prepare(
+                "SELECT fullname, role
+                FROM Media_People
+                JOIN People ON Media_People.people_id = People.people_id
+                WHERE Media_People.media_id = ?"
+            );
+            //Use Prepare and ? to protect against SQL injections. Binds the id varable to the ? palceholder
+            $results->bindParam(1,$id,PDO::PARAM_INT);
+            //executes the query and loads the results into the results objects
+            $results->execute();
+        } 
+
+        catch (Exception $e) {
+            echo "Unable to retrieve results";
+        }
+        //loop through people and add them to the correct role in the item array
+        while($row = $results->fetch(PDO::FETCH_ASSOC)){
+            $item[$row["role"]][]= $row["fullname"];
+        }
+        return $item;
 }
 
 function get_item_html($id,$item) {
