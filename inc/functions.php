@@ -66,7 +66,30 @@ function single_item_array($id){
         return $item;
 }
 
-function get_item_html($id,$item) {
+function random_catalog_array(){
+    include("connection.php");
+
+    // Try to query the database and make the result into a POD statment object
+    try {
+        $results = $db->query("
+            SELECT media_id, title, category, img 
+            FROM Media
+            ORDER BY RANDOM()
+            LIMIT 4"
+        );
+    } 
+
+    // If can't query the database return an error message
+    catch (Exception $e) {
+        echo "Unable to retrieve results";
+    }
+
+
+    $catalog = $results->fetchAll();
+    return $catalog;
+}
+
+function get_item_html($item) {
     $output = "<li><a href='details.php?id="
         . $item["media_id"] . "'><img src='" 
         . $item["img"] . "' alt='" 
