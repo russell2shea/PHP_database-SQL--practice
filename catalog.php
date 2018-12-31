@@ -39,7 +39,11 @@ if($total_items > 0){
 
     //limit results in redirect
     $limit_results = "";
-    if (!empty($section)) {
+
+    if(!empty($search)){
+        $limit_results = "s=".urlencode(htmlspecialchars($search))."&";
+    }
+    else if (!empty($section)) {
       $limit_results = "cat=" . $section . "&";
     }
 
@@ -59,7 +63,7 @@ if($total_items > 0){
     //determine the offset (number of items to skip) for the current page
     //for example: on page 3 with 8 item per page, the offset would be 16
     $offset = ($current_page - 1) * $items_per_page;
-    
+
     $pagination = "<div class=\"pagination\">";
     $pagination .= "Pages: ";  
     for ($i = 1;$i <= $total_pages;$i++) {
@@ -67,7 +71,10 @@ if($total_items > 0){
         $pagination .= " <span>$i</span>";
       } else {
         $pagination .= " <a href='catalog.php?";
-        if (!empty($section)) {
+        if(!empty($search)){
+            $pagination .= "s=".urlencode(htmlspecialchars($search))."&";
+        }
+        else if (!empty($section)) {
           $pagination .= "cat=".$section."&";
         }
         $pagination .= "pg=$i'>$i</a>";
